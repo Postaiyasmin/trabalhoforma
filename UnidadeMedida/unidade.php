@@ -5,10 +5,10 @@ require_once("../classes/UnidadeMedida.class.php");
 $conexao = new PDO(DSN, USUARIO, SENHA);
 
 
-$unidadeMedida =  isset($_GET['unidadeMedida']) ? $_GET['unidadeMedida'] : 0;
+$idUnidade =  isset($_GET['idUnidade']) ? $_GET['idUnidade'] : 0;
 $msg =  isset($_GET['MSG']) ? $_GET['MSG'] : "";
-if ($unidadeMedida > 0) {
-    $forma = UnidadeMedida::listar(1, $unidadeMedida)[0];
+if ($idUnidade > 0) {
+    $unidade = UnidadeMedida::listar(1, $idUnidade)[0];
 }
 
 // Inserir e alterar dados
@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('location: index.php?MSG=Dados inseridos/Alterados com sucesso!');
     else
         header('location: index.php?MSG=Erro ao inserir/alterar registro');
+    
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $busca =  isset($_GET['busca']) ? $_GET['busca'] : 0;

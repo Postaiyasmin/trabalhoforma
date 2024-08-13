@@ -30,8 +30,8 @@ include_once('quadrado.php');
                 foreach ($uns as $un){
                     $str= "<option value='{$un->getIdUnidade()}'";
                     if(isset($forma))
-                       if($forma->getUnidadeMedida()-> getIdQuadrado() == $un->getIdUnidade())
-                       $str .="selected";
+                       if($forma->getUnidade()-> getIdUnidade() == $un->getIdUnidade())
+                       $str .=" selected ";
                        $str .= ">{$un->getUnidadeMedida()}</option>";
                        echo $str;
                 }
@@ -68,7 +68,6 @@ include_once('quadrado.php');
 
         <?php  
             foreach($lista as $quadrado){ 
-            
               echo  $quadrado->desenhar();
 
             }     

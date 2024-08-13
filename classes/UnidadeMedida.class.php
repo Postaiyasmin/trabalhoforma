@@ -33,15 +33,15 @@ class UnidadeMedida{
 
     public function incluir(){
 
-        $conexao = Database::getInstance();
         $sql = 'INSERT INTO unidade (idUnidade, UnidadeMedida) 
                      VALUES (:idUnidade, :UnidadeMedida)';
 
-        $comando = $conexao->prepare($sql);  
-        $comando->bindValue(':idUnidade',$this->idUnidade); 
-        $comando->bindValue(':UnidadeMedida',$this->UnidadeMedida);
+            $parametros = array(
+            ':idUnidade' =>$this->idUnidade,
+            ':UnidadeMedida' => $this->UnidadeMedida
+             );
 
-        return $comando->execute(); 
+        return Database::executar($sql, $parametros);
 
     }  
 
@@ -52,21 +52,22 @@ class UnidadeMedida{
                  WHERE idUnidade= :idUnidade';
 
         $comando = $conexao->prepare($sql); 
-        $comando->bindValue(':idUnidade',$this->getIdUnidade);
+        $comando->bindValue(':idUnidade',$this->idUnidade);
         return $comando->execute();
     }  
 
     public function alterar(){
-        $conexao = Database::getInstance();
+
         $sql = 'UPDATE unidade 
-                   SET  unidadeMedida = :unidadeMedida
+                   SET  UnidadeMedida = :UnidadeMedida
                  WHERE idUnidade = :idUnidade';
                  
-        $comando = $conexao->prepare($sql); 
-        $comando->bindValue(':idUnidade',$this->idUnidade);
-        $comando->bindValue(':UnidadeMedida',$this->UnidadeMedida);
-
-        return $comando->execute();
+        $parametros = array(
+        ':idUnidade' =>$this->idUnidade,
+        ':UnidadeMedida' => $this->UnidadeMedida
+        );
+        
+        return Database::executar($sql, $parametros);
     }  
     
     public static function listar($tipo = 0, $busca = "" ){

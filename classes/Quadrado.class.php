@@ -1,6 +1,5 @@
 <?php
-require_once("../config/config.inc.php");
-
+require_once("../classes/UnidadeMedida.class.php");
 require_once("../classes/Database.class.php");
 
 class Quadrado{
@@ -8,14 +7,14 @@ class Quadrado{
     private $idQuadrado;
     private $lado;
     private $cor;
-    private $unidadeMedida;
+    private $unidade;
 
-    public function __construct($idQuadrado = 0, $lado = 1, $cor = "black", $unidadeMedida = "px"){
+    public function __construct($idQuadrado = 0, $lado = "null", $cor = "black", UnidadeMedida $unidade = null){
 
         $this->setIdQuadrado($idQuadrado);
         $this->setLado($lado); 
         $this->setCor($cor);
-        $this->setUnidadeMedida($unidadeMedida);
+        $this->setUnidade($unidade);
     }
 
     public function setIdQuadrado($novoIdQuadrado){
@@ -40,35 +39,36 @@ class Quadrado{
             $this->cor = $novaCor;
     }
 
-    public function setUnidadeMedida($novaUnidadeMedida){
-        if ($novaUnidadeMedida == "")
+    public function setUnidade(UnidadeMedida $novaUnidade){
+        if ($novaUnidade == "")
             throw new Exception("Erro: Unidade de Medida inválida!");
         else
-            $this->unidadeMedida = $novaUnidadeMedida;
+            $this->unidade = $novaUnidade;
     }
     
     public function getIdQuadrado(){ return $this->idQuadrado; }
     public function getLado() { return $this->lado;}
     public function getCor() { return $this->cor;}
-    public function getUnidadeMedida() { return $this->unidadeMedida;}
+    public function getUnidade() { return $this->unidade;}
 
     public function incluir(){
 
-        $conexao = Database::getInstance();
         $sql = 'INSERT INTO quadrado (idQuadrado, lado, cor, un)   
-                     VALUES (:idQuadrado, :lado, :cor, :unidadeMedida)';
+                     VALUES (:idQuadrado, :lado, :cor, :un)';
 
-        $comando = $conexao->prepare($sql);  
-        $comando->bindValue(':idQuadrado',$this->idQuadrado); 
-        $comando->bindValue(':lado',$this->lado);
-        $comando->bindValue(':cor',$this->cor);
-        $comando->bindValue(':unidadeMedida',$this->unidadeMedida);
 
-        return $comando->execute(); 
+        $parametros = array(
+            ':idQuadrado' =>$this->idQuadrado,
+            ':lado' => $this->lado,
+            ':cor' => $this->cor,
+            ':un' => $this->unidade->getIdUnidade()
+        );
+
+        return Database::executar($sql, $parametros);
     }  
     
     public function desenhar(){
-        return "<center> <a href='index.php?idQuadrado=".$this->getIdQuadrado()."'><div  class='container' style='background-color: ".$this->getCor() . "; width:".$this->getLado().$this->getUnidadeMedida()->getUnidadeMedida()."; height:".$this->getLado().$this->getUnidadeMedida()->getUnidadeMedida()."'> </div></a></center><br>";
+        return "<center> <a href='index.php?idQuadrado=".$this->getIdQuadrado()."'><div  class='container' style='background-color: ".$this->getCor() . "; width:".$this->getLado().$this->getUnidade()->getUnidadeMedida()."; height:".$this->getLado().$this->getUnidade()->getUnidadeMedida()."'> </div></a></center><br>";
     }
 
     public function excluir(){
@@ -83,18 +83,20 @@ class Quadrado{
     }  
 
     public function alterar(){
-        $conexao = Database::getInstance();
+
         $sql = 'UPDATE quadrado 
-                   SET lado = :lado, cor = :cor, unidadeMedida = :unidadeMedida
+                   SET lado = :lado, cor = :cor, un = :un
                  WHERE idQuadrado = :idQuadrado';
                  
-        $comando = $conexao->prepare($sql); 
-        $comando->bindValue(':idQuadrado',$this->idQuadrado);
-        $comando->bindValue(':lado',$this->lado);
-        $comando->bindValue(':cor',$this->cor);
-        $comando->bindValue(':unidadeMedida',$this->unidadeMedida);
+        $parametros = array(
+            ':lado' => $this->lado,
+            ':cor' => $this->cor,
+            ':un' => $this->unidade->getIdUnidade(),
+            ':idQuadrado' =>$this->idQuadrado
+        );
 
-        return $comando->execute();
+        return Database::executar($sql, $parametros);       
+
     }  
     
 
@@ -115,10 +117,12 @@ class Quadrado{
             $comando->bindValue(':busca',$busca); 
         $comando->execute(); 
 
-        $quadrados = array();          
-        while($registro = $comando->fetch()){  
+        $quadrados = array();    
 
-            $quadrado = new Quadrado($registro['idQuadrado'],$registro['lado'],$registro['cor'], $registro['un']); 
+        while($forma = $comando->fetch(PDO::FETCH_ASSOC)){  
+
+            $unidade = UnidadeMedida::listar(1,$forma['un'])[0];
+            $quadrado = new Quadrado($forma['idQuadrado'],$forma['lado'],$forma['cor'], $unidade); 
             array_push($quadrados,$quadrado); 
         }
         return $quadrados;

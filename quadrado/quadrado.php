@@ -15,16 +15,16 @@ if ($idQuadrado > 0) {
 // Inserir e alterar dados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $idQuadrado =  isset($_POST['idQuadrado']) ? $_POST['idQuadrado'] : 0;
-    $ladoTamanho =  isset($_POST['ladoTamanho']) ? $_POST['ladoTamanho'] : 0;
+    $lado =  isset($_POST['lado']) ? $_POST['lado'] : 0;
     $cor =  isset($_POST['cor']) ? $_POST['cor'] : 0;
-    $UnidadeMedida =  isset($_POST['UnidadeMedida']) ? $_POST['UnidadeMedida'] : 0;
+    $unidade =  isset($_POST['UnidadeMedida']) ? $_POST['UnidadeMedida'] : 0;
     $acao =  isset($_POST['acao']) ? $_POST['acao'] : 0;
 
 
 
     try {
-        $quadrado = new Quadrado($idQuadrado, $ladoTamanho, $cor, $UnidadeMedida);
-        var_dump($quadrado);
+        $Unids = UnidadeMedida::listar(1,$unidade)[0];
+        $quadrado = new Quadrado($idQuadrado, $lado, $cor, $Unids);
     } catch (Exception $e) {
         header('Location:index.php?MSG=ERROR:' . $e->getMessage());
         echo "TAMANHO:$ladoTamanho<br>COR:$cor<br>UNIDADE:$UnidadeMedida";

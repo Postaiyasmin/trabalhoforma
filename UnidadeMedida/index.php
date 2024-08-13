@@ -14,10 +14,10 @@ include_once('unidade.php');
         <fieldset>
 
             <label for="idUnidade">Id: </label>
-            <input type="text" id="idUnidade" name="idUnidade" value="<?=isset($forma)?$forma->getIdUnidade():0 ?>" readonly> 
+            <input type="text" id="idUnidade" name="idUnidade" value="<?=isset($unidade)?$unidade->getIdUnidade():0 ?>" readonly> 
             
             <label for="UnidadeMedida">Descrição </label>
-            <input type="text" id="unidadeMedida" name="unidadeMedida" value="<?php if(isset($forma)) echo $forma->getUnidadeMedida()?>"> 
+            <input type="text" id="unidadeMedida" name="unidadeMedida" value="<?php if(isset($unidade)) echo $unidade->getUnidadeMedida()?>"> 
             
      
             
@@ -45,14 +45,16 @@ include_once('unidade.php');
 
     <hr>
     <h1 style="text-align: center;">Lista meus Quadrados</h1>
-
+        <table border='1'>
         <?php  
-            foreach($lista as $Unidade){ 
+            foreach($lista as $unidade){ 
             
-              echo  $Unidade->desenhar($Unidade);
+              echo "<tr><td><a href='index.php?idUnidade=" . $unidade->getIdUnidade() . "'>" .$unidade->getIdUnidade() . "</a></td><td>" . $unidade->getUnidadeMedida() . "</td></tr>";
 
             }     
+        
         ?>
+        </table>
        
 </body>
 </html>
