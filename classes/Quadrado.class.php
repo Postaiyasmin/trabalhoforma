@@ -126,6 +126,16 @@ class Quadrado{
             array_push($quadrados,$quadrado); 
         }
         return $quadrados;
+
     }    
+
+    
+    public function calcularPerimetro(){
+        return  $this->getLado() *  4  ."". $this->getUnidade()->getUnidadeMedida();  
+    }
+
+    public function calculararea(){
+        return  $this->getLado() * $this->getLado() . " " . $this->getUnidade()->getUnidadeMedida()."²";   
+    }
 
 }

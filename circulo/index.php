@@ -192,6 +192,9 @@ include_once('circulo.php');
         <?php  
             foreach($lista as $circulo){ 
               echo "<div>" . $circulo->desenhar() . "</div>";
+              echo  "Perímetro:". $circulo->calcularPerimetro() ."<br>";
+              echo  "Área:". $circulo->calculararea() ."<br><br>";
+
             }
         ?>
  

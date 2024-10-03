@@ -75,7 +75,8 @@ class Circulo{
         height:".$this->getDiametro().$this->getUnidade()->getUnidadeMedida()."'> 
         </div></a></center><br>";
     }
-
+   
+    
     public function excluir(){
         $conexao = Database::getInstance();
         $sql = 'DELETE 
@@ -132,5 +133,13 @@ class Circulo{
         }
         return $circulos;
     }    
+
+    public function calcularPerimetro(){
+        return  $this->diametro * 3.14 . " " . $this->getUnidade()->getUnidadeMedida();  
+    }
+
+    public function calculararea(){
+        return 3.14 * (($this->diametro/2) * ($this->diametro/2)) . " " . $this->getUnidade()->getUnidadeMedida()."²";   
+    }
 
 }

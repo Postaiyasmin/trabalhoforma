@@ -191,6 +191,8 @@ include_once('triangulo.php');
         <?php  
             foreach($lista as $triangulo){ 
               echo $triangulo->desenhar() ;
+              echo "Perímetro:".$triangulo->calcularPerimetro()."<br>"; 
+              echo "área:".$triangulo->calcularArea();
             }
         ?>
 

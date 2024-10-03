@@ -110,9 +110,9 @@ class Triangulo{
                 <div style='
                     width: 0;
                     height: 0;
-                    border-left: " . $this->getLado1() . $this->getunidade()->getUnidadeMedida() . " solid transparent;
-                    border-right: " . $this->getLado2() . $this->getunidade()->getUnidadeMedida() . " solid transparent;
-                    border-bottom: " . $this->getLado3() . $this->getunidade()->getUnidadeMedida() . " solid " . $this->getCor() . ";
+                   /*lado esquerdo*/ border-left: " . $this->getLado1() . $this->getunidade()->getUnidadeMedida() . " solid transparent;
+                   /*lado direito*/ border-right: " . $this->getLado2() . $this->getunidade()->getUnidadeMedida() . " solid transparent;
+                   /*borda inferior*/ border-bottom: " . $this->getLado3() . $this->getunidade()->getUnidadeMedida() . " solid " . $this->getCor() . ";
                 '></div>
                 <div style='
                     position: absolute;
@@ -131,6 +131,18 @@ class Triangulo{
         </center><br>";
     }
 
+    public function calcularPerimetro(){
+    
+        return $this->getLado1() + $this->getLado2() + $this->getLado3(). " " .  $this->getUnidade()->getUnidadeMedida();
+    }
+
+    public function calcularArea(){
+        
+        $p = ($this->getLado1() + $this->getlado2() + $this->getLado3()) / 2;
+
+        return sqrt($p * ($p - $this->getLado1()) * ($p - $this->getLado2()) * ($p - $this->getLado3())). " " .  $this->getUnidade()->getUnidadeMedida() . "²";
+
+    }
   
     public function excluir(){
         $conexao = Database::getInstance();

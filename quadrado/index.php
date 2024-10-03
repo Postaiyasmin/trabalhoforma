@@ -192,6 +192,8 @@ include_once('quadrado.php');
         <?php  
             foreach($lista as $quadrado){ 
               echo "<div>" . $quadrado->desenhar() . "</div>";
+              echo  $quadrado->calcularPerimetro() ."<br>";
+              echo  $quadrado->calculararea() ."<br><br>";
             }
         ?>
    
