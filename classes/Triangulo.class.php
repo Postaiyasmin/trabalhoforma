@@ -103,35 +103,33 @@ class Triangulo{
     
    
     public function desenhar()
-{
-    $lado1 = $this->getLado1();
-    $lado2 = $this->getLado2();
-    $lado3 = $this->getLado3();
-    $cor = $this->getCor();
-    $unidade = $this->getUnidade()->getUnidadeMedida();
-
-    // Exemplo de coordenadas arbitrárias para os vértices do triângulo
-    // Você pode ajustar as coordenadas conforme as dimensões dos lados e tipo de triângulo
-    $x1 = 0;
-    $y1 = 0;
-    $x2 = $lado1;
-    $y2 = 0;
-    $x3 = $lado1 / 2;  // Este valor pode variar dependendo do tipo de triângulo
-    $y3 = sqrt(pow($lado3, 2) - pow($lado1 / 2, 2)); // Cálculo da altura do triângulo
-
-    return "<center>
+    {
+        return "<center>
         <a href='index.php?idTriangulo=" . $this->getId() . "'>
-        <svg
+            <div style='position: relative; display: inline-block;'>
+                <div style='
                     width: 0;
                     height: 0;
-                    border-left: " . ($this->getLado1() / 2) . $this->getUnidade()->getUnidadeMedida() . " solid transparent;
-                    border-right: " . ($this->getLado2() / 2) . $this->getUnidade()->getUnidadeMedida() . " solid transparent;
-                    border-bottom: " . $this->getLado3() . $this->getUnidade()->getUnidadeMedida() . " solid " . $this->getCor() . "; >
-                <polygon points='$x1,$y1 $x2,$y2 $x3,$y3' style='fill:$cor;' />
-            </svg>
+                    border-left: " . $this->getLado1() . $this->getunidade()->getUnidadeMedida() . " solid transparent;
+                    border-right: " . $this->getLado2() . $this->getunidade()->getUnidadeMedida() . " solid transparent;
+                    border-bottom: " . $this->getLado3() . $this->getunidade()->getUnidadeMedida() . " solid " . $this->getCor() . ";
+                '></div>
+                <div style='
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 100%;
+                    height: 100%;
+                 
+                    background-size: 100% 100%;
+                    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+                    pointer-events: none;
+                '></div>
+            </div>
         </a>
         </center><br>";
-}
+    }
 
   
     public function excluir(){
@@ -190,7 +188,7 @@ class Triangulo{
         while($forma = $comando->fetch(PDO::FETCH_ASSOC)){  
 
             $unidade = UnidadeMedida::listar(1,$forma['un'])[0];
-            $triangulo = new Triangulo($forma['idTriangulo'],$forma['lado1'],$forma['lado2'],$forma['lado3'],$forma['cor'], $forma['tipo'], $unidade); 
+            $triangulo = new Triangulo($forma['idTriangulo'],$forma['lado1'],$forma['lado2'],$forma['lado3'], $forma['tipo'], $forma['cor'], $unidade); 
             array_push($triangulos,$triangulo); 
         }
         return $triangulos;
