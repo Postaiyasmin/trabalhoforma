@@ -1,5 +1,5 @@
 <?php  
-include_once('quadrado.php'); 
+include_once('circulo.php'); 
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@ include_once('quadrado.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Quadrados</title>
+    <title>Formulário de Círculos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -104,7 +104,7 @@ include_once('quadrado.php');
             margin-bottom: 20px;
         }
 
-        .square-list {
+        .circle-list {
             width: 90%;
             max-width: 800px;
             margin: 0 auto;
@@ -113,7 +113,7 @@ include_once('quadrado.php');
             gap: 15px;
         }
 
-        .square-list div {
+        .circle-list div {
             width: 100%;
             padding: 10px;
             background-color: white;
@@ -125,23 +125,23 @@ include_once('quadrado.php');
 
 <body>
     <header>
-        <button><a href="../circulo/">Círculo</a></button>
         <button><a href="../triangulo/">Triângulo</a></button>
+        <button><a href="../quadrado/">Quadrado</a></button>
     </header>
 
-    <form action="quadrado.php" method="post">
+    <form action="circulo.php" method="post">
         <fieldset>
-            <legend>Insira as Informações sobre o Quadrado</legend>
+            <legend>Insira as Informações sobre o Círculo</legend>
 
-            <label for="idQuadrado">Id:</label>
-            <input type="text" id="idQuadrado" name="idQuadrado" value="<?=isset($forma)?$forma->getIdQuadrado():0 ?>" readonly>
-
-            <label for="lado">Lado:</label>
-            <input type="text" id="lado" name="lado" value="<?php if(isset($forma)) echo $forma->getLado()?>">
-
+            <label for="idCirculo">Id:</label>
+            <input type="text" id="idCirculo" name="idCirculo" value="<?=isset($forma)?$forma->getId():0 ?>" readonly>
+               
+            <label for="diametro">Diâmetro:</label>
+            <input type="text" id="diametro" name="diametro" value="<?php if(isset($forma)) echo $forma->getDiametro()?>">
+              
             <label for="cor">Cor:</label>
             <input type="color" id="cor" name="cor" value="<?php if(isset($forma)) echo $forma->getCor()?>">
-             
+                <br><br>
             <label for="UnidadeMedida">Unidade de Medida:</label>
             <select name="UnidadeMedida" id="UnidadeMedida">
                 <?php 
@@ -154,13 +154,13 @@ include_once('quadrado.php');
                         $str .= ">{$un->getUnidadeMedida()}</option>";
                         echo $str;
                     }
-                ?>
+                ?> 
             </select>
             <br><br>
-                            
-            <button type="submit" name="acao" value="salvar">Salvar</button>
-            <button type="submit" name="acao" value="excluir">Excluir</button>
-            <button type="submit" name="acao" value="alterar">Alterar</button>
+
+            <button type='submit' name='acao' value='salvar'>Salvar</button>
+            <button type='submit' name='acao' value='excluir'>Excluir</button>
+            <button type='submit' name='acao' value='alterar'>Alterar</button>
         </fieldset>
     </form>
 
@@ -176,8 +176,8 @@ include_once('quadrado.php');
                 <option value="0">Escolha</option>
                 <option value="1">Id</option>
                 <option value="2">Cor</option>
-                <option value="3">Lado</option>
-                <option value="4">Unidade Medida</option>
+                <option value="3">Diâmetro</option>
+                <option value="4">Unidade de Medida</option>
             </select>
 
             <button type="submit">Buscar</button>
@@ -186,15 +186,15 @@ include_once('quadrado.php');
 
     <hr>
 
-    <h1>Lista de Quadrados</h1>
+    <h1>Lista de Círculos</h1>
 
-    
+   
         <?php  
-            foreach($lista as $quadrado){ 
-              echo "<div>" . $quadrado->desenhar() . "</div>";
+            foreach($lista as $circulo){ 
+              echo "<div>" . $circulo->desenhar() . "</div>";
             }
         ?>
-   
+ 
 </body>
 
 </html>

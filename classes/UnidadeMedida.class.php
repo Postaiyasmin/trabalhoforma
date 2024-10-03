@@ -78,7 +78,7 @@ class UnidadeMedida{
             switch($tipo){
                 case 1: $sql .= " WHERE idUnidade = :busca"; break;
               
-                case 4: $sql .= " WHERE UnidadeMedida like :busca";  $busca = "%{$busca}%";  break;
+                case  2: $sql .= " WHERE UnidadeMedida like :busca";  $busca = "%{$busca}%";  break;
             }
         $comando = $conexao->prepare($sql);        
         if ($tipo > 0 )

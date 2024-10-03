@@ -1,14 +1,13 @@
 <?php  
-include_once('quadrado.php'); 
+include_once('triangulo.php'); 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Quadrados</title>
+    <title>Formulário de Triângulos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -104,44 +103,42 @@ include_once('quadrado.php');
             margin-bottom: 20px;
         }
 
-        .square-list {
-            width: 90%;
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .square-list div {
-            width: 100%;
-            padding: 10px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    
     </style>
 </head>
 
 <body>
     <header>
+        <button><a href="../quadrado/">Quadrado</a></button>
         <button><a href="../circulo/">Círculo</a></button>
-        <button><a href="../triangulo/">Triângulo</a></button>
     </header>
 
-    <form action="quadrado.php" method="post">
+    <form action="triangulo.php" method="post">
         <fieldset>
-            <legend>Insira as Informações sobre o Quadrado</legend>
+            <legend>Insira as Informações sobre o Triângulo</legend>
 
-            <label for="idQuadrado">Id:</label>
-            <input type="text" id="idQuadrado" name="idQuadrado" value="<?=isset($forma)?$forma->getIdQuadrado():0 ?>" readonly>
+            <label for="idTriangulo">Id:</label>
+            <input type="text" id="idTriangulo" name="idTriangulo" value="<?=isset($forma)?$forma->getId():0 ?>" readonly>
 
-            <label for="lado">Lado:</label>
-            <input type="text" id="lado" name="lado" value="<?php if(isset($forma)) echo $forma->getLado()?>">
+            <label for="lado1">Lado 1:</label>
+            <input type="text" id="lado1" name="lado1" value="<?php if(isset($forma)) echo $forma->getLado1()?>">
+
+            <label for="lado2">Lado 2:</label>
+            <input type="text" id="lado2" name="lado2" value="<?php if(isset($forma)) echo $forma->getLado2()?>">
+
+            <label for="lado3">Lado 3:</label>
+            <input type="text" id="lado3" name="lado3" value="<?php if(isset($forma)) echo $forma->getlado3()?>">
+
+            <label for="Tipo">Tipo:</label>
+            <select name="Tipo" id="Tipo">
+                <option value="isoceles">Isóceles</option>
+                <option value="escaleno">Escaleno</option>
+                <option value="equilatero">Equilátero</option>
+            </select>
 
             <label for="cor">Cor:</label>
             <input type="color" id="cor" name="cor" value="<?php if(isset($forma)) echo $forma->getCor()?>">
-             
+
             <label for="UnidadeMedida">Unidade de Medida:</label>
             <select name="UnidadeMedida" id="UnidadeMedida">
                 <?php 
@@ -156,11 +153,10 @@ include_once('quadrado.php');
                     }
                 ?>
             </select>
-            <br><br>
-                            
-            <button type="submit" name="acao" value="salvar">Salvar</button>
-            <button type="submit" name="acao" value="excluir">Excluir</button>
-            <button type="submit" name="acao" value="alterar">Alterar</button>
+
+            <button type='submit' name='acao' value='salvar'>Salvar</button>
+            <button type='submit' name='acao' value='excluir'>Excluir</button>
+            <button type='submit' name='acao' value='alterar'>Alterar</button>
         </fieldset>
     </form>
 
@@ -176,8 +172,11 @@ include_once('quadrado.php');
                 <option value="0">Escolha</option>
                 <option value="1">Id</option>
                 <option value="2">Cor</option>
-                <option value="3">Lado</option>
-                <option value="4">Unidade Medida</option>
+                <option value="3">Lado 1</option>
+                <option value="4">Lado 2</option>
+                <option value="5">Lado 3</option>
+                <option value="6">Tipo</option>
+                <option value="7">Unidade Medida</option>
             </select>
 
             <button type="submit">Buscar</button>
@@ -186,15 +185,15 @@ include_once('quadrado.php');
 
     <hr>
 
-    <h1>Lista de Quadrados</h1>
+    <h1>Lista de Triângulos</h1>
 
-    
+   
         <?php  
-            foreach($lista as $quadrado){ 
-              echo "<div>" . $quadrado->desenhar() . "</div>";
+            foreach($lista as $triangulo){ 
+              echo $triangulo->desenhar() ;
             }
         ?>
-   
+
 </body>
 
 </html>
