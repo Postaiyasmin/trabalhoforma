@@ -40,7 +40,7 @@ class Database{
         $comando = self::vincular($comando, $parametros);
         try {
             $comando->execute();
-            self::$lastId = $conexao->lastInsertId();
+            // self::$lastId = $conexao->lastInsertId();
             //$conexao->commit();
             return true;
         }catch(PDOException $e){

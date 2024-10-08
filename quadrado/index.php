@@ -129,7 +129,7 @@ include_once('quadrado.php');
         <button><a href="../triangulo/">Triângulo</a></button>
     </header>
 
-    <form action="quadrado.php" method="post">
+    <form action="quadrado.php" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Insira as Informações sobre o Quadrado</legend>
 
@@ -155,7 +155,10 @@ include_once('quadrado.php');
                         echo $str;
                     }
                 ?>
+
+
             </select>
+            <input type="file" name="imagem" id="imagem" >
             <br><br>
                             
             <button type="submit" name="acao" value="salvar">Salvar</button>

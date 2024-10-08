@@ -8,13 +8,17 @@ class Quadrado{
     private $lado;
     private $cor;
     private $unidade;
+    private $imagem;
 
-    public function __construct($idQuadrado = 0, $lado = "null", $cor = "black", UnidadeMedida $unidade = null){
+
+    public function __construct($idQuadrado = 0, $lado = "null", $cor = "black", UnidadeMedida $unidade = null, $imagem = "null"){
 
         $this->setIdQuadrado($idQuadrado);
         $this->setLado($lado); 
         $this->setCor($cor);
         $this->setUnidade($unidade);
+        $this->setImagem($imagem);
+
     }
 
     public function setIdQuadrado($novoIdQuadrado){
@@ -33,9 +37,7 @@ class Quadrado{
     }
 
     public function setCor($novaCor){
-        if ($novaCor =="")
-            throw new Exception("Erro: Cor inválida!");
-        else
+   
             $this->cor = $novaCor;
     }
 
@@ -45,30 +47,44 @@ class Quadrado{
         else
             $this->unidade = $novaUnidade;
     }
+
+    public function setImagem($novaimagem){
+       
+            $this->imagem = $novaimagem;
+    }
+
     
     public function getIdQuadrado(){ return $this->idQuadrado; }
     public function getLado() { return $this->lado;}
     public function getCor() { return $this->cor;}
     public function getUnidade() { return $this->unidade;}
+    public function getImagem() { return $this->imagem;}
 
     public function incluir(){
 
-        $sql = 'INSERT INTO quadrado (idQuadrado, lado, cor, un)   
-                     VALUES (:idQuadrado, :lado, :cor, :un)';
+        $sql = 'INSERT INTO quadrado (idQuadrado, lado, cor, un , imagem)   
+                     VALUES (:idQuadrado, :lado, :cor, :un :imagem)';
 
 
         $parametros = array(
             ':idQuadrado' =>$this->idQuadrado,
             ':lado' => $this->lado,
             ':cor' => $this->cor,
-            ':un' => $this->unidade->getIdUnidade()
+            ':un' => $this->unidade->getIdUnidade(),
+            ':imagem' => $this->imagem,
         );
 
         return Database::executar($sql, $parametros);
     }  
     
     public function desenhar(){
-        return "<center> <a href='index.php?idQuadrado=".$this->getIdQuadrado()."'><div  class='container' style='background-color: ".$this->getCor() . "; width:".$this->getLado().$this->getUnidade()->getUnidadeMedida()."; height:".$this->getLado().$this->getUnidade()->getUnidadeMedida()."'> </div></a></center><br>";
+        return "<center> <a href='index.php?idQuadrado=".$this->getIdQuadrado()."'>
+        <div  class='container' style='background-color: ".$this->getCor() . " ;  
+        background-image:url(".'"'.$this->getImagem().'"'.");
+        background-repeat:no repeat;
+        background-size: 100% 100%;
+        width:".$this->getLado().$this->getUnidade()->getUnidadeMedida()."; 
+        height:".$this->getLado().$this->getUnidade()->getUnidadeMedida()."'> </div></a></center><br>";
     }
 
     public function excluir(){
@@ -85,14 +101,15 @@ class Quadrado{
     public function alterar(){
 
         $sql = 'UPDATE quadrado 
-                   SET lado = :lado, cor = :cor, un = :un
+                   SET lado = :lado, cor = :cor, un = :un , imagem = :imagem
                  WHERE idQuadrado = :idQuadrado';
                  
         $parametros = array(
             ':lado' => $this->lado,
             ':cor' => $this->cor,
             ':un' => $this->unidade->getIdUnidade(),
-            ':idQuadrado' =>$this->idQuadrado
+            ':idQuadrado' =>$this->idQuadrado,
+            ':imagem' =>$this->imagem
         );
 
         return Database::executar($sql, $parametros);       
@@ -122,7 +139,7 @@ class Quadrado{
         while($forma = $comando->fetch(PDO::FETCH_ASSOC)){  
 
             $unidade = UnidadeMedida::listar(1,$forma['un'])[0];
-            $quadrado = new Quadrado($forma['idQuadrado'],$forma['lado'],$forma['cor'], $unidade); 
+            $quadrado = new Quadrado($forma['idQuadrado'],$forma['lado'],$forma['cor'], $unidade , $forma['imagem']); 
             array_push($quadrados,$quadrado); 
         }
         return $quadrados;
